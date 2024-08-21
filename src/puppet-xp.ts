@@ -380,8 +380,8 @@ class PuppetXp extends PUPPET.Puppet {
     }
 
     // revert talkerId and toId according to isMyMsg
-    if (args[5] === 1) {
-      toId = talkerId
+    if (!talkerId) {
+      toId = this.selfInfo.id
       talkerId = this.selfInfo.id
     }
 
@@ -495,7 +495,7 @@ class PuppetXp extends PUPPET.Puppet {
 
             this.emit('room-join', { inviteeIdList: inviteeList, inviterId: inviter.id, roomId })
           }
-        } else if (type === PUPPET.types.Message.Transfer) { /* empty */ } else {
+        }  else {
           this.messageStore[payload.id] = payload
           if (this.isReady) {
             this.emit('message', { messageId: payload.id })
